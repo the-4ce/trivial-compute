@@ -12,6 +12,7 @@ import {
   nextPlayer,
   addScore,
   setWinner,
+  isValidMoveTarget,
 } from "./state.js";
 import htm from "htm";
 
@@ -45,6 +46,8 @@ function Dice({ value }) {
 
 function GameBoard() {
   const gameCategories = categories.value.slice(0, 4);
+  const currentPlayerRow = game.value.playerPositions[game.value.currentPlayer][0];
+  const currentPlayerColumn = game.value.playerPositions[game.value.currentPlayer][1];
 
   if (game.value.winner !== null) return html`<h1 class="display-5">${game.value.playerNames[game.value.winner]} Wins!</h1>`;
   return html`<table class="text-light fw-semibold">
@@ -52,12 +55,13 @@ function GameBoard() {
       (row, rowIndex) =>
         html`<tr>
           ${row.map((cell, columnIndex) => {
+            if (!cell) return null;
             switch (cell.type) {
               case "roll-again":
                 return html`<td
-                  class="cell bg-dark ${!game.value.canRoll && 'cursor-pointer'}"
+                  class="cell bg-dark ${!game.value.canRoll && isValidMoveTarget(game.value.board, currentPlayerRow, currentPlayerColumn,  rowIndex, columnIndex, game.value.rollValue) && 'cursor-pointer active'}"
                   onClick=${() => {
-                    if (game.value.canRoll) return;
+                    if (game.value.canRoll || !isValidMoveTarget(game.value.board, currentPlayerRow, currentPlayerColumn,  rowIndex, columnIndex, game.value.rollValue)) return;
                     updatePlayerPosition(game.value.currentPlayer, [rowIndex, columnIndex]);
                     updateCanRoll(true);
                   }}>
@@ -66,9 +70,9 @@ function GameBoard() {
                 </td>`;
               case "question":
                 return html`<td
-                  class="cell bg-category-${cell.category} ${!game.value.canRoll && 'cursor-pointer'}"
+                  class="cell bg-category-${cell.category} ${!game.value.canRoll && isValidMoveTarget(game.value.board, currentPlayerRow, currentPlayerColumn,  rowIndex, columnIndex, game.value.rollValue) && 'cursor-pointer active'}"
                   onClick=${() => {
-                    if (game.value.canRoll) return;
+                    if (game.value.canRoll || !isValidMoveTarget(game.value.board, currentPlayerRow, currentPlayerColumn,  rowIndex, columnIndex, game.value.rollValue)) return;
                     updatePlayerPosition(game.value.currentPlayer, [rowIndex, columnIndex]);
                     if (askQuestion(cell.category)) {
                       updateCanRoll(true);
@@ -80,9 +84,9 @@ function GameBoard() {
                 </td>`;
               case "hq":
                 return html`<td
-                  class="cell bg-category-${cell.category} ${!game.value.canRoll && 'cursor-pointer'}"
+                  class="cell bg-category-${cell.category} ${!game.value.canRoll && isValidMoveTarget(game.value.board, currentPlayerRow, currentPlayerColumn,  rowIndex, columnIndex, game.value.rollValue) && 'cursor-pointer active'}"
                   onClick=${() => {
-                    if (game.value.canRoll) return;
+                    if (game.value.canRoll || !isValidMoveTarget(game.value.board, currentPlayerRow, currentPlayerColumn,  rowIndex, columnIndex, game.value.rollValue)) return;
                     updatePlayerPosition(game.value.currentPlayer, [rowIndex, columnIndex]);
                     if (askQuestion(cell.category)) {
                       addScore(game.value.currentPlayer, cell.category)
@@ -96,9 +100,9 @@ function GameBoard() {
                 </td>`;
               case "home":
                 return html`<td
-                  class="cell bg-dark ${!game.value.canRoll && 'cursor-pointer'}"
+                  class="cell bg-dark ${!game.value.canRoll && isValidMoveTarget(game.value.board, currentPlayerRow, currentPlayerColumn,  rowIndex, columnIndex, game.value.rollValue) && 'cursor-pointer active'}"
                   onClick=${() => {
-                    if (game.value.canRoll) return;
+                    if (game.value.canRoll || !isValidMoveTarget(game.value.board, currentPlayerRow, currentPlayerColumn,  rowIndex, columnIndex, game.value.rollValue)) return;
                     updatePlayerPosition(game.value.currentPlayer, [rowIndex, columnIndex]);
                     if (askQuestion(1)) {
                       setWinner(game.value.currentPlayer);
