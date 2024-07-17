@@ -22,6 +22,16 @@
   position: relative;
 }
 
+.cell.active {
+  animation: flash-opacity 1s linear infinite;
+}
+
+@keyframes flash-opacity {
+  50% {
+    opacity: 0.7;
+  }
+}
+
 .mini-cell {
   width: 25px;
   height: 25px;
