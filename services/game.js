@@ -1,8 +1,9 @@
 import { signal, computed } from "@preact/signals";
-import { loadData, saveData } from "../data/data.js";
+import { loadData, saveData } from "../database/data.js";
 
 export const defaultGameState = {
   currentCategory: null,
+  debugMode: false,
   currentPlayer: 0,
   winner: null,
   canRoll: true,

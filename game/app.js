@@ -13,7 +13,7 @@ import {
   addScore,
   setWinner,
   isValidMoveTarget,
-} from "./state.js";
+} from "../services/game.js";
 import htm from "htm";
 
 const html = htm.bind(h);

@@ -70,7 +70,7 @@ export async function loadData(name) {
     return JSON.parse(storage);
   } else {
     try {
-      const data = await loadRemoteCsv(`../data/${name}.csv`);
+      const data = await loadRemoteCsv(`../database/${name}.csv`);
       localStorage.setItem(name, JSON.stringify(data));
       return data;
     } catch (e) {

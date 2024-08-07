@@ -1,5 +1,5 @@
 import { signal, computed } from "@preact/signals";
-import { loadData, saveData, clearData } from "../data/data.js";
+import { loadData, saveData, clearData } from "../database/data.js";
 
 export const categories = signal([]);
 export const questions = signal([]);

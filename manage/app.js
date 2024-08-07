@@ -11,7 +11,7 @@ import {
   removeQuestion,
   updateCategory,
   updateQuestion,
-} from "./state.js";
+} from "../services/questions.js";
 import htm from "htm";
 
 const html = htm.bind(h);
