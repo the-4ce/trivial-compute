@@ -1,3 +1,11 @@
+import { openDB, deleteDB, wrap, unwrap } from "idb";
+
+export const db = await openDB('trivial-compute-store', 1, {
+  upgrade(db) {
+    db.createObjectStore('trivial-compute');
+  },
+});
+
 /**
  * Parses a CSV string into a 2D array.
  * @param {string} str - The CSV string to parse.
@@ -65,13 +73,14 @@ export async function loadRemoteCsv(url) {
 }
 
 export async function loadData(name) {
-  let storage = localStorage.getItem(name);
-  if (storage) {
-    return JSON.parse(storage);
+  let item = await db.get('trivial-compute', name);
+  // let storage = localStorage.getItem(name);
+  if (item) {
+    return JSON.parse(item);
   } else {
     try {
       const data = await loadRemoteCsv(`../database/${name}.csv`);
-      localStorage.setItem(name, JSON.stringify(data));
+      await saveData(name, data);
       return data;
     } catch (e) {
       console.error(e);
@@ -80,10 +89,10 @@ export async function loadData(name) {
   }
 }
 
-export function saveData(name, data) {
-  localStorage.setItem(name, JSON.stringify(data));
+export async function saveData(name, data) {
+  await db.put('trivial-compute', JSON.stringify(data), name);
 }
 
-export function clearData(name) {
-  localStorage.removeItem(name);
+export async function clearData(name) {
+  return await db.delete('trivial-compute', name);
 }
