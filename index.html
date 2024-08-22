@@ -8,21 +8,30 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div
-      class="d-flex align-items-center cover-image vh-100"
-      style="background-image: url('./images/home.jpeg');">
+    <div class="d-flex align-items-center cover-image vh-100" style="background-image: url('./images/home.jpeg')">
       <div class="container py-5">
         <h1 class="display-5 fw-bold text-white d-flex align-items-center">
           Trivial Compute
           <image src="./images/icon.svg" height="40" alt="Trivial Compute" class="ms-3" />
-
         </h1>
-        <div class="col-lg-6">
-          <p class="lead mb-4 text-light">
-            Now with 100% more compute.
-          </p>
-          <div class="d-grid gap-2 d-sm-flex justify-content-sm-start">
-            <a href="./game" class="btn btn-dark btn-lg px-4 gap-3">Play Game</a>
+        <div class="col-lg-9">
+          <p class="lead mb-4 text-light">Now with 100% more compute.</p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
+            <a href="./game" class="btn btn-dark btn-lg px-4 gap-3">Host Game</a>
+            <form class="input-group input-group-lg w-auto" action="game">
+              <input
+                type="text"
+                class="form-control bg-transparent text-light placeholder-light border-warning border-2"
+                placeholder="Game ID"
+                aria-label="Game ID"
+                name="id"
+                id="id"
+                required />
+              <button type="submit" class="btn btn-warning btn-lg">Join Game</button>
+            </form>
+          </div>
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
             <a href="./manage" class="btn btn-outline-light btn-lg px-4">Manage Questions</a>
             <a href="./help" class="btn btn-outline-light btn-lg px-4">View Help</a>
           </div>
